@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elasticsearch Demo</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Elasticsearch Real-Time Search Demo</h1>
+    <input type="text" id="search-input" placeholder="Search products...">
+    <div id="results"></div>
+
+    <script>
+        $('#search-input').on('input', function() {
+            var query = $(this).val();
+            if (query.length > 2) {
+                $.get('/search', {q: query}, function(data) {
+                    var results = '';
+                    data.forEach(function(product) {
+                        results += '<p><strong>' + product.name + '</strong>: ' + product.description + '</p>';
+                    });
+                    $('#results').html(results);
+                });
+            } else {
+                $('#results').empty();
+            }
+        });
+    </script>
+</body>
+</html>
